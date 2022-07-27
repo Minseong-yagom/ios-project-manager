@@ -38,10 +38,12 @@ final class ProjectManagerHomeViewController: UIViewController {
   }
 
   private func initializeCollectionView() {
-    [todoCollectionView, doingCollectionView, doneCollectionView].forEach {
-      $0?.dataSource = self
-      $0?.delegate = self
-      $0?.collectionViewLayout = listCompositionLayout()
+    [todoCollectionView, doingCollectionView, doneCollectionView].forEach { collectionView in
+      guard let listLayout = listCompositionLayout(collectionView) else { return }
+
+      collectionView?.dataSource = self
+      collectionView?.delegate = self
+      collectionView?.collectionViewLayout = listLayout
     }
   }
 
@@ -77,8 +79,23 @@ final class ProjectManagerHomeViewController: UIViewController {
 // MARK: - UICollectionViewCompositionalLayout
 
 extension ProjectManagerHomeViewController {
-  private func listCompositionLayout() -> UICollectionViewCompositionalLayout {
-    let listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
+  private func listCompositionLayout(_ colletcionView: UICollectionView?) -> UICollectionViewCompositionalLayout? {
+    guard let colletcionView = colletcionView else { return nil }
+    guard let category = fetchProejctCategory(from: colletcionView) else { return nil }
+    guard let project = realmService.filter(projectCategory: category) else { return nil}
+
+    var listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
+    listConfiguration.trailingSwipeActionsConfigurationProvider = { indexPath in
+      let DeleteAction = UIContextualAction(
+        style: .destructive,
+        title: "Delete"
+      ) {_, _, _ in
+        self.realmService.delete(project: project[indexPath.row])
+      }
+
+      return UISwipeActionsConfiguration(actions: [DeleteAction])
+    }
+
     let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
 
     return layout
