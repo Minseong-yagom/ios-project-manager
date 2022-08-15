@@ -189,18 +189,21 @@ extension ProjectManagerHomeViewController {
     projectCategory: ProjectCategory,
     gestureRecognizer: UILongPressGestureRecognizer
   ) {
-    guard gestureRecognizer.state == .began else { return }
+    switch gestureRecognizer.state {
+    case .began:
+      let touchedLocation = gestureRecognizer.location(in: tableView)
 
-    let touchedLocation = gestureRecognizer.location(in: tableView)
+      guard let indexPath = tableView.indexPathForRow(at: touchedLocation) else { return }
+      guard let cell = tableView.cellForRow(at: indexPath) else { return }
 
-    guard let indexPath = tableView.indexPathForRow(at: touchedLocation) else { return }
-    guard let cell = tableView.cellForRow(at: indexPath) else { return }
-
-    self.presentMoveMenuAlert(
-      view: cell.contentView,
-      projectCategory: projectCategory,
-      indexPath: indexPath
-    )
+      self.presentMoveMenuAlert(
+        view: cell.contentView,
+        projectCategory: projectCategory,
+        indexPath: indexPath
+      )
+    default:
+      return
+    }
   }
 
   private func presentMoveMenuAlert(
