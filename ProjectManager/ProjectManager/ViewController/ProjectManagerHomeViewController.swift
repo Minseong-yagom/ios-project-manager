@@ -24,9 +24,9 @@ final class ProjectManagerHomeViewController: UIViewController {
     self.initializeNavigationBar()
     self.initializeTableView()
     self.setCountLabelCornerRadius()
-    self.realmService.makeRealmObserve {
-      [self.todoTableView, self.doingTableView, self.doneTableView].forEach {
-        $0.reloadData()
+    self.realmService.makeRealmObserve { [weak self] in
+      [self?.todoTableView, self?.doingTableView, self?.doneTableView].forEach {
+        $0?.reloadData()
       }
     }
   }
