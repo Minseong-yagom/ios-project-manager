@@ -31,7 +31,7 @@ final class ProjectManagerHomeViewController: UIViewController {
     }
   }
 
-  override func viewWillDisappear(_ animated: Bool) {
+  deinit {
     self.realmService.invalidateNotificationToken()
   }
 
