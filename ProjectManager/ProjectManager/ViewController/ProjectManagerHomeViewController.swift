@@ -63,15 +63,15 @@ final class ProjectManagerHomeViewController: UIViewController {
   }
 
   @IBAction private func longPressTodoTableView(_ sender: UILongPressGestureRecognizer) {
-    self.handleLongPress(todoTableView, projectCategory: .todo, gestureRecognizer: sender)
+    self.handleLongPress(todoTableView, projectCategory: .TODO, gestureRecognizer: sender)
   }
 
   @IBAction private func longPressDoingTableView(_ sender: UILongPressGestureRecognizer) {
-    self.handleLongPress(doingTableView, projectCategory: .doing, gestureRecognizer: sender)
+    self.handleLongPress(doingTableView, projectCategory: .DOING, gestureRecognizer: sender)
   }
 
   @IBAction private func longPressDoneTableView(_ sender: UILongPressGestureRecognizer) {
-    self.handleLongPress(doneTableView, projectCategory: .done, gestureRecognizer: sender)
+    self.handleLongPress(doneTableView, projectCategory: .DONE, gestureRecognizer: sender)
   }
 }
 
@@ -107,9 +107,9 @@ extension ProjectManagerHomeViewController: UITableViewDataSource {
 
   private func fetchProejctCategory(from tableView: UITableView) -> ProjectCategory? {
     let projectCategory: [UITableView: ProjectCategory] = [
-      self.todoTableView: .todo,
-      self.doingTableView: .doing,
-      self.doneTableView: .done
+      self.todoTableView: .TODO,
+      self.doingTableView: .DOING,
+      self.doneTableView: .DONE
     ]
 
     return projectCategory[tableView]
@@ -123,11 +123,11 @@ extension ProjectManagerHomeViewController: UITableViewDataSource {
 
   private func configureCountLabel(projectCategory: ProjectCategory, itemCount: Int) {
     switch projectCategory {
-    case .todo:
+    case .TODO:
       self.todoCountLabel.text = "\(itemCount)"
-    case .doing:
+    case .DOING:
       self.doingCountLabel.text = "\(itemCount)"
-    case .done:
+    case .DONE:
       self.doneCountLabel.text = "\(itemCount)"
     }
   }
@@ -226,22 +226,22 @@ extension ProjectManagerHomeViewController {
     )
 
     let firstMenuAction = UIAlertAction(
-      title: "Move to \(projectCategory.moveCategoryMenu.first)",
+      title: "Move to \(projectCategory.moveCategoryMenu[0].rawValue)",
       style: .default
     ) { _ in
       self.moveProjectCategory(
         current: projectCategory,
-        to: projectCategory.moveCategoryMenu.first,
+        to: projectCategory.moveCategoryMenu[0].rawValue,
         indexPath: indexPath)
     }
 
     let secondMenuAction = UIAlertAction(
-      title: "Move to \(projectCategory.moveCategoryMenu.second)",
+      title: "Move to \(projectCategory.moveCategoryMenu[1].rawValue)",
       style: .default
     ) { _ in
       self.moveProjectCategory(
         current: projectCategory,
-        to: projectCategory.moveCategoryMenu.second,
+        to: projectCategory.moveCategoryMenu[1].rawValue,
         indexPath: indexPath)
     }
 

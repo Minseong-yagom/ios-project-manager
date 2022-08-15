@@ -91,7 +91,7 @@ final class RealmService {
   }
 
   func filter(projectCategory: ProjectCategory) -> Results<Project>? {
-    let predicate = NSPredicate(format: "projectCategory == %@", projectCategory.description)
+    let predicate = NSPredicate(format: "projectCategory == %@", projectCategory.rawValue)
     let filteringResult = realm?.objects(Project.self).filter(predicate)
 
     return filteringResult

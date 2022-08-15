@@ -83,7 +83,7 @@ final class ProjectAddViewController: UIViewController {
       title: projectTitleTextField.text ?? "",
       body: projectBodyTextView.text,
       date: projectDatePicker.date,
-      projectCategory: ProjectCategory.todo.description
+      projectCategory: ProjectCategory.TODO.rawValue
     )
 
     self.realmService?.create(project: project)

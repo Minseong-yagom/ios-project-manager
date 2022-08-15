@@ -5,30 +5,12 @@
 //  Created by Minseong on 2022/07/13.
 //
 
-enum ProjectCategory {
-  case todo
-  case doing
-  case done
+enum ProjectCategory: String, CaseIterable {
+  case TODO
+  case DOING
+  case DONE
 
-  var description: String {
-    switch self {
-    case .todo:
-      return "TODO"
-    case .doing:
-      return "DOING"
-    case .done:
-      return "DONE"
-    }
-  }
-
-  var moveCategoryMenu: (first: String, second: String) {
-    switch self {
-    case .todo:
-      return ("DOING", "DONE")
-    case .doing:
-      return ("TODO", "DONE")
-    case .done:
-      return ("TODO", "DOING")
-    }
+  var moveCategoryMenu: [ProjectCategory] {
+    Self.allCases.filter { $0 != self }
   }
 }
