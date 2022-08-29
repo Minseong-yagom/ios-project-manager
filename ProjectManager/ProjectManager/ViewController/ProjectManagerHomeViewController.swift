@@ -79,7 +79,7 @@ final class ProjectManagerHomeViewController: UIViewController {
 
 extension ProjectManagerHomeViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard let proejctCategory = self.fetchProejctCategory(from: tableView) else { return .zero }
+    guard let proejctCategory = self.fetchProejctCategory(from: tableView.tag) else { return .zero }
     let itemCount = fetchItemCount(from: proejctCategory)
 
     self.configureCountLabel(projectCategory: proejctCategory, itemCount: itemCount)
@@ -94,7 +94,7 @@ extension ProjectManagerHomeViewController: UITableViewDataSource {
     ) as? ProjectManagerTableViewCell else {
       return UITableViewCell()
     }
-    guard let projectList = fetchProjectList(in: tableView) else { return cell}
+    guard let projectList = fetchProjectList(in: tableView.tag) else { return cell}
 
     cell.configure(
       title: projectList[indexPath.row].title,
@@ -105,14 +105,14 @@ extension ProjectManagerHomeViewController: UITableViewDataSource {
     return cell
   }
 
-  private func fetchProejctCategory(from tableView: UITableView) -> ProjectCategory? {
-    let projectCategory: [UITableView: ProjectCategory] = [
-      self.todoTableView: .TODO,
-      self.doingTableView: .DOING,
-      self.doneTableView: .DONE
+  private func fetchProejctCategory(from tableViewTag: Int) -> ProjectCategory? {
+    let projectCategory: [Int: ProjectCategory] = [
+      self.todoTableView.tag: .TODO,
+      self.doingTableView.tag: .DOING,
+      self.doneTableView.tag: .DONE
     ]
 
-    return projectCategory[tableView]
+    return projectCategory[tableViewTag]
   }
 
   private func fetchItemCount(from projectCategory: ProjectCategory) -> Int {
@@ -132,8 +132,8 @@ extension ProjectManagerHomeViewController: UITableViewDataSource {
     }
   }
 
-  private func fetchProjectList(in tableView: UITableView) ->  Results<Project>? {
-    guard let projectCategory = fetchProejctCategory(from: tableView) else { return nil }
+  private func fetchProjectList(in tableViewTag: Int) ->  Results<Project>? {
+    guard let projectCategory = fetchProejctCategory(from: tableViewTag) else { return nil }
     guard let projectList = realmService.filter(projectCategory: projectCategory) else { return nil }
 
     return projectList
@@ -146,7 +146,7 @@ extension ProjectManagerHomeViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
 
-    guard let projectCategory = fetchProejctCategory(from: tableView) else { return }
+    guard let projectCategory = fetchProejctCategory(from: tableView.tag) else { return }
 
     self.presentProjectEditView(projectCategory: projectCategory, indexPath: indexPath)
   }
@@ -155,7 +155,7 @@ extension ProjectManagerHomeViewController: UITableViewDelegate {
     _ tableView: UITableView,
     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
   ) -> UISwipeActionsConfiguration? {
-    guard let projectList = fetchProjectList(in: tableView) else { return nil }
+    guard let projectList = fetchProjectList(in: tableView.tag) else { return nil }
 
     let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
       _, _, actionPerformed in
