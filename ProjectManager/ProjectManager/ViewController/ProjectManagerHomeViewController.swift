@@ -225,28 +225,21 @@ extension ProjectManagerHomeViewController {
       size: .zero
     )
 
-    let firstMenuAction = UIAlertAction(
-      title: "Move to \(projectCategory.moveCategoryMenu[0].rawValue)",
-      style: .default
-    ) { _ in
-      self.moveProjectCategory(
-        current: projectCategory,
-        to: projectCategory.moveCategoryMenu[0].rawValue,
-        indexPath: indexPath)
+    projectCategory.moveCategoryMenu.forEach { category in
+      let menuAction = UIAlertAction(
+        title: "Move to \(category)",
+        style: .default
+      ) { _ in
+        self.moveProjectCategory(
+          current: projectCategory,
+          to: category.rawValue,
+          indexPath: indexPath
+        )
+      }
+
+      moveMenuAlertController.addAction(menuAction)
     }
 
-    let secondMenuAction = UIAlertAction(
-      title: "Move to \(projectCategory.moveCategoryMenu[1].rawValue)",
-      style: .default
-    ) { _ in
-      self.moveProjectCategory(
-        current: projectCategory,
-        to: projectCategory.moveCategoryMenu[1].rawValue,
-        indexPath: indexPath)
-    }
-
-    moveMenuAlertController.addAction(firstMenuAction)
-    moveMenuAlertController.addAction(secondMenuAction)
     self.present(moveMenuAlertController, animated: true)
   }
 
