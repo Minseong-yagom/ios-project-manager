@@ -225,14 +225,14 @@ extension ProjectManagerHomeViewController {
       size: .zero
     )
 
-    projectCategory.moveCategoryMenu.forEach { category in
+    projectCategory.moveCategoryMenu.forEach { moveCategory in
       let menuAction = UIAlertAction(
-        title: "Move to \(category)",
+        title: "Move to \(moveCategory)",
         style: .default
       ) { _ in
         self.moveProjectCategory(
-          current: projectCategory,
-          to: category.rawValue,
+          currentCategory: projectCategory,
+          to: moveCategory.rawValue,
           indexPath: indexPath
         )
       }
@@ -244,11 +244,11 @@ extension ProjectManagerHomeViewController {
   }
 
   private func moveProjectCategory(
-    current: ProjectCategory,
+    currentCategory: ProjectCategory,
     to moveCategory: String,
     indexPath: IndexPath
   ) {
-    guard let filteringProjects = realmService.filter(projectCategory: current) else { return }
+    guard let filteringProjects = realmService.filter(projectCategory: currentCategory) else { return }
 
     realmService.updateProjectCategory(
       uuid: filteringProjects[indexPath.row].uuid,
