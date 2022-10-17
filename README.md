@@ -55,8 +55,8 @@
 
 ---
 ## 고민한점
-**Local(SQLite <span style="color:red">vs</span> CoreData <span style="color:red">vs</span> UserDefaults <span style="color:red">vs</span> Realm)**
-**Remote DB(firebase <span style="color:red">vs</span> MongoDB)**
+**Local DB(SQLite <span style="color:red">vs</span> CoreData <span style="color:red">vs</span> UserDefaults <span style="color:red">vs</span> Realm)**
+
 
 ---
 ### Realm
@@ -70,23 +70,10 @@
 **단점**
 - 타사 라이브러리를 추가해야 하므로 앱 크기가 증가
 - SQLite 및 Firebase에 비해 작은 커뮤니티
-### MongoDB
-**장점**
-- JSON구조로 데이터를 직관적으로 이해 가능
-- 사용 방법이 쉽고, 개발이 편리함
-- 별도의 스키마 선언 없이 도큐먼트의 필드를 자유롭게 추가 및 삭제할 수 있는 유연한 구조
-- 많은 양의 데이터에 대한 Read / Write 성능이 뛰어남
-- 빅데이터 처리에 특화
-
-**단점**
-- 데이터 업데이트 중 장애 발생 시, 데이터 손실 가능
-- MongoDB의 데이터의 유실 가능성 (큰 데이터 모두가 아닌 중간중간 일부 데이터) 
-- 많은 인덱스 사용 시, 충분한 메모리 확보 필요
-> 장점이 극명하여 단점을 감안하고도 많이 사용한다고 함
 
 ---
 ### 하위 버전 호환성에는 문제가 없는가?
-|MongoDB Realm| 
+|Realm| 
 |:-:|
 |XCode 13.1 이상|
 |iOS 9 이상|
@@ -106,7 +93,7 @@ iOS, ipadOS의 OS 점유율을 확인하였고
 
 ---
 ### 미래 지속가능성이 있는가?
-MongoDB는 DB-engines에서 랭킹 5등에 위치하고 있고, 회사 규모가 크고 안정적이며 여러 회사를 인수하여 기능 업데이트 등을 많이하고 있는 것으로 보아 지속가능성이 있어보입니다.
+Realm을 인수한 Mongo는 DB-engines에서 랭킹 5등에 위치하고 있고, 회사 규모가 크고 안정적이며 여러 회사를 인수하여 기능 업데이트 등을 많이하고 있는 것으로 보아 지속가능성이 있어보입니다.
 
 ---
 ### 리스크를 최소화 할 수 있는가? 알고있는 리스크는 무엇인가?
@@ -116,12 +103,6 @@ MongoDB는 DB-engines에서 랭킹 5등에 위치하고 있고, 회사 규모가
 ---
 ### 어떤 의존성 관리도구를 사용하여 관리할 수 있는가?
 Cocoapods을 이용하여 관리할 수 있습니다.
-
----
-### 이 앱의 요구기능에 적절한 선택인가?
-앱의 규모가 작다보니 MongoDB보다 상대적으로 firebase가 좀 더 적절해 보입니다.
-하지만 Realm이 MongoDB에 인수되고 DeviceSync를 만들어 Atlas와의 원활한 동기화를  지원한다고 합니다.
-이러한 이유로 realm과 MongoDB를 같이 써보고 싶어서 realm 과 MongoDB를 선택하였습니다.
 
 ---
 ## 트러블 슈팅
@@ -162,7 +143,6 @@ attribute가 fill이여서 높이가 자동으로 채워지는 것을 발견
 - CollectionView
 - Composition Layout
 - Date Picker
-- MongoDB
 - Popover
 - Realm
 - Storyboard
